@@ -1,0 +1,54 @@
+@startuml CIMB Decorator Pattern
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #1F3864
+  ArrowColor #1F3864
+}
+hide circle
+
+interface BankAccount <<interface>> {
+  + showAccountType() : String
+  + getInterestRate() : Double
+  + getBalance() : Double
+  + showBenefits() : String
+  + computeBalanceWithInterest() : Double
+  + showInfo() : String
+}
+
+interface BankAccountDecorator <<interface>> {
+  + setBankAccount(bankAccount : BankAccount) : void
+}
+
+class SavingsAccount {
+  - accountNumber : int
+  - accountName : String
+  - balance : double
+  + setAccountNumber(accountNumber : int) : void
+  + setAccountName(accountName : String) : void
+  + setBalance(balance : double) : void
+  + getAccountNumber() : int
+  + getAccountName() : String
+}
+
+class GSave {
+  - bankAccount : BankAccount
+}
+
+class UpSave {
+  - bankAccount : BankAccount
+}
+
+class Cimb {
+  + main(args : String[]) : void
+}
+
+BankAccountDecorator --|> BankAccount
+SavingsAccount ..|> BankAccount
+GSave ..|> BankAccountDecorator
+UpSave ..|> BankAccountDecorator
+BankAccountDecorator o--> BankAccount : wraps
+Cimb ..> BankAccount : uses
+@enduml
